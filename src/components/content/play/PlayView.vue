@@ -1,14 +1,24 @@
 <template>
   <div id="playView">
-    <div class="circle">
-      <img src="" alt="">
+    <div class="circle" :class="{roate:isTrans}">
+      <img :src="picUrl" alt="" class="songPic">
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: "PlayView"
+    name: "PlayView",
+    props:{
+      picUrl:{
+        type:String,
+        default:''
+      },
+      isTrans:{
+        type: Boolean,
+        default: false
+      }
+    }
   }
 </script>
 
@@ -17,6 +27,15 @@
     position: relative;
     border-left: 1px solid #cccccc;
     border-right: 1px solid #cccccc;
+
+  }
+  @keyframes turn{
+    from{
+      transform: rotateZ(0);
+    }
+    to{
+      transform: rotateZ(360deg);
+    }
   }
   .circle{
     width: 300px;
@@ -26,6 +45,26 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%,-50%);
+    /*transform: translate(-50%,-50%);*/
+    animation-play-state: paused;
+    margin-left: -150px;
+    margin-top: -150px;
+  }
+  .roate{
+    animation-name: turn;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
+    animation-timing-function: linear;
+    animation-duration: 5s;
+  }
+  .songPic{
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    margin-left: -90px;
+    margin-top: -90px;
   }
 </style>

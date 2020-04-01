@@ -1,12 +1,13 @@
 <template>
   <div id="songsList">
     <ul>
-      <li v-for="(items,index) in songs" :key="index" @click="playsongs(items.id)">{{items.name}}</li>
+      <li v-for="(items,index) in songs" :key="index" @click="playsongs(items.id)" :class="{iswhite:index%2===0,isgary:!(index%2===0)}">{{items.name}}</li>
     </ul>
   </div>
 </template>
 
 <script>
+
   export default {
     name: "SongsList",
     props:{
@@ -18,8 +19,13 @@
       }
     },
     methods:{
-      playsongs(id){
+      playsongs(id,index){
         this.$emit('playsong',id);
+      }
+    },
+    computed:{
+      iswhite(){
+        return
       }
     }
   }
@@ -31,7 +37,7 @@
   }
   ul{
     height: 100%;
-    overflow: hidden;
+    overflow: auto;
   }
   li{
     width: 100%;
@@ -39,5 +45,11 @@
     line-height: 40px;
     font-size: 14px;
     overflow: hidden;
+  }
+  .iswhite{
+    background-color: #fff;
+  }
+  .isgary{
+    background-color: #cccccc;
   }
 </style>

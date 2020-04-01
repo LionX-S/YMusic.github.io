@@ -16,7 +16,6 @@
     methods:{
       search() {
         this.$emit('search',this.keywords);
-        console.log(this.keywords);
       }
     }
   }

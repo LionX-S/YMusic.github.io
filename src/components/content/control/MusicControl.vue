@@ -1,6 +1,6 @@
 <template>
   <div id="musiccontrol">
-    <audio :src="songsUrl" controls class="songscon" autoplay></audio>
+    <audio :src="songsUrl" controls class="songscon" autoplay @play="play" @pause="pause"></audio>
   </div>
 </template>
 
@@ -11,6 +11,14 @@
       songsUrl:{
         type:String,
         default:''
+      }
+    },
+    methods:{
+      play(){
+        this.$emit('play');
+      },
+      pause(){
+        this.$emit('pause');
       }
     }
   }

@@ -3,10 +3,10 @@
     <search-bar @search="searchsongs"></search-bar>
     <div class="mainView">
       <songs-list :songs="songs" class="songslist" @playsong="playsong"></songs-list>
-      <play-view class="playview"></play-view>
-      <content-msg class="contentmsg"></content-msg>
+      <play-view class="playview" :picUrl="pic" :is-trans="isTrans"></play-view>
+      <content-msg class="contentmsg" :comments="commentsMsg"></content-msg>
     </div>
-    <music-control :songsUrl="songsUrl"></music-control>
+    <music-control :songsUrl="songsUrl" @play="play" @pause="pause"></music-control>
   </div>
 </template>
 
@@ -30,7 +30,10 @@
     data() {
       return {
         songs: [],
-        songsUrl:''
+        songsUrl:'',
+        commentsMsg:[],
+        pic:'',
+        isTrans: false
       }
     },
     methods: {
@@ -53,9 +56,37 @@
             id:id
           }
         }).then(res=>{
+          console.log(res)
           this.songsUrl=res.data.data[0].url;
-        })
+        });
+        request({
+          params:{
+            type:'comments',
+            id:id
+          }
+        }).then(res=>{
+          this.commentsMsg=res.data.hotComments;
+          console.log(res);
+        });
+        request({
+          params:{
+            type:'detail',
+            id:id
+          }
+        }).then(res=>{
+          console.log(res);
+          this.pic=res.data.songs[0].al.picUrl;
+        });
+      },
+      play(){
+        console.log('..');
+        this.isTrans=true;
+      },
+      pause(){
+        console.log('==');
+        this.isTrans=false;
       }
+
     }
   }
 </script>
