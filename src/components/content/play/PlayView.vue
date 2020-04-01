@@ -1,6 +1,6 @@
 <template>
   <div id="playView">
-    <div class="circle" :class="{roate:isTrans}">
+    <div class="circle" :class="{roate:isTrans,isroate:isroate}">
       <img :src="picUrl" alt="" class="songPic">
     </div>
   </div>
@@ -17,6 +17,9 @@
       isTrans:{
         type: Boolean,
         default: false
+      },
+      isroate:{
+        type:Boolean,
       }
     }
   }
@@ -56,6 +59,9 @@
     animation-play-state: running;
     animation-timing-function: linear;
     animation-duration: 5s;
+  }
+  .isroate{
+    animation-play-state: paused;
   }
   .songPic{
     width: 180px;

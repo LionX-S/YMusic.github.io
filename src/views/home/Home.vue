@@ -3,7 +3,7 @@
     <search-bar @search="searchsongs"></search-bar>
     <div class="mainView">
       <songs-list :songs="songs" class="songslist" @playsong="playsong"></songs-list>
-      <play-view class="playview" :picUrl="pic" :is-trans="isTrans"></play-view>
+      <play-view class="playview" :picUrl="pic" :is-trans="isTrans" :isroate="isroate"></play-view>
       <content-msg class="contentmsg" :comments="commentsMsg"></content-msg>
     </div>
     <music-control :songsUrl="songsUrl" @play="play" @pause="pause"></music-control>
@@ -33,7 +33,8 @@
         songsUrl:'',
         commentsMsg:[],
         pic:'',
-        isTrans: false
+        isTrans: false,
+        isroate: false
       }
     },
     methods: {
@@ -45,7 +46,6 @@
             s: keyword
           }
         }).then(res => {
-          console.log(res);
           this.songs = res.data.result.songs;
         })
       },
@@ -56,7 +56,6 @@
             id:id
           }
         }).then(res=>{
-          console.log(res)
           this.songsUrl=res.data.data[0].url;
         });
         request({
@@ -66,7 +65,6 @@
           }
         }).then(res=>{
           this.commentsMsg=res.data.hotComments;
-          console.log(res);
         });
         request({
           params:{
@@ -74,17 +72,16 @@
             id:id
           }
         }).then(res=>{
-          console.log(res);
           this.pic=res.data.songs[0].al.picUrl;
         });
       },
       play(){
-        console.log('..');
         this.isTrans=true;
+        this.isroate=false;
       },
       pause(){
-        console.log('==');
-        this.isTrans=false;
+        this.isTrans=true;
+        this.isroate=true;
       }
 
     }
