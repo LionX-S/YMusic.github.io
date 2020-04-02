@@ -30,9 +30,9 @@
     data() {
       return {
         songs: [],
-        songsUrl:'',
-        commentsMsg:[],
-        pic:'',
+        songsUrl: '',
+        commentsMsg: [],
+        pic: '',
         isTrans: false,
         isroate: false
       }
@@ -49,39 +49,41 @@
           this.songs = res.data.result.songs;
         })
       },
-      playsong(id){
-        request({
-          params:{
-            type:'song',
-            id:id
-          }
-        }).then(res=>{
-          this.songsUrl=res.data.data[0].url;
-        });
-        request({
-          params:{
-            type:'comments',
-            id:id
-          }
-        }).then(res=>{
-          this.commentsMsg=res.data.hotComments;
-        });
-        request({
-          params:{
-            type:'detail',
-            id:id
-          }
-        }).then(res=>{
-          this.pic=res.data.songs[0].al.picUrl;
+      playsong(id) {
+        Promise.all(
+            [
+              request({
+                params: {
+                  type: 'song',
+                  id: id
+                }
+              }),
+              request({
+                params: {
+                  type: 'comments',
+                  id: id
+                }
+              }),
+              request({
+                params: {
+                  type: 'detail',
+                  id: id
+                }
+              })
+            ]).then(res => {
+          console.log(res);
+          this.songsUrl = res[0].data.data[0].url;
+          this.commentsMsg = res[1].data.hotComments;
+          this.pic = res[2].data.songs[0].al.picUrl;
         });
       },
-      play(){
-        this.isTrans=true;
-        this.isroate=false;
+      play() {
+        this.isTrans = true;
+        this.isroate = false;
       },
-      pause(){
-        this.isTrans=true;
-        this.isroate=true;
+      pause() {
+        this.isTrans = true;
+        this.isroate = true;
       }
 
     }
@@ -93,16 +95,19 @@
     width: 100%;
     height: 100%;
   }
-  .mainView{
+
+  .mainView {
     width: 100%;
     height: calc(100% - 59px - 59px);
     display: flex;
     box-sizing: border-box;
   }
-  .contentmsg,.songslist{
+
+  .contentmsg, .songslist {
     flex: 1;
   }
-  .playview{
+
+  .playview {
     flex: 2;
   }
 </style>

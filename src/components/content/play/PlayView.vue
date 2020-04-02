@@ -1,6 +1,6 @@
 <template>
   <div id="playView">
-    <div class="circle" :class="{roate:isTrans,isroate:isroate}">
+    <div class="circle" :class="{'roate':isTrans,'isroate':isroate}">
       <img :src="picUrl" alt="" class="songPic">
     </div>
   </div>
